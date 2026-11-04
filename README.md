@@ -6,6 +6,11 @@ En este breve tutorial se guiará al estudiante en el uso básico del software K
 <summary><b>Contenido</b></summary>
 
 - [Instalación](#instalación)
+  - [Repositorios de Ubuntu (recomendado)](#repositorios-de-ubuntu-recomendado)
+  - [PPA oficial de KiCad](#ppa-oficial-de-kicad)
+  - [Flatpak](#flatpak)
+  - [Otras plataformas](#otras-plataformas)
+  - [Comprobar la instalación](#comprobar-la-instalación)
 - [Entorno inicial de trabajo](#entorno-inicial-de-trabajo)
 - [Entorno de edición de esquemas](#entorno-de-edición-de-esquemas)
   - [Edición del cajetín](#edición-del-cajetín)
@@ -28,19 +33,70 @@ En este breve tutorial se guiará al estudiante en el uso básico del software K
 
 ## Instalación
 
-Existen varias formas de instalar KiCad:
+Este tutorial y el proyecto de ejemplo ([ejercicio_1](ejercicio_1/)) se han realizado con **KiCad 7.0** sobre **Ubuntu 24.04**, por lo que se recomienda usar esa misma versión.
 
-1. Desde los repositorios de Ubuntu vía `apt`. Para ello se debe abrir una terminal y escribir:
+> **Importante:** KiCad puede abrir proyectos de versiones anteriores, pero **no** de versiones posteriores. Un proyecto guardado con KiCad 8 o superior ya no se podrá abrir con KiCad 7. Si se trabaja en equipo, todos los miembros deben usar la misma versión.
+
+### Repositorios de Ubuntu (recomendado)
+
+Es la forma más sencilla y la que instala KiCad 7.0 en Ubuntu 24.04. Abrimos una terminal y escribimos:
+
+```bash
+sudo apt update
+sudo apt install kicad
+```
+
+Este comando instala el programa junto con las bibliotecas de símbolos y huellas. La interfaz en español ya viene incluida, por lo que no hace falta instalar ningún paquete de idioma adicional. Opcionalmente se pueden instalar:
+
+- **Modelos 3D de los componentes** (necesarios para la sección de [Visualización 3D](#visualización-3d) y para exportar a `STEP`). Ocupan unos 5,7 GB:
 
     ```bash
-    sudo apt install kicad
+    sudo apt install kicad-packages3d
     ```
 
-    Es posible que haya que instalar por separado algunos paquetes de idioma. La versión disponible vía `apt` en Ubuntu 24.04 es la 7.0.
+- **Ayuda en español** (manuales accesibles desde el menú `Ayuda`):
 
-2. Usando una AppImage, que se puede descargar desde la página oficial del software. De esta forma podremos disponer de versiones más recientes.
+    ```bash
+    sudo apt install kicad-doc-es
+    ```
 
-3. Si se desea usar el software en otra plataforma, se puede consultar la información correspondiente en la página oficial.
+### PPA oficial de KiCad
+
+Si se necesita una versión más reciente, el equipo de KiCad mantiene un repositorio PPA para Ubuntu. Hay un PPA por cada versión principal; en el siguiente ejemplo se usa la 9.0, aunque se puede consultar cuál es la última en la [página de descargas para Ubuntu](https://www.kicad.org/download/ubuntu/):
+
+```bash
+sudo add-apt-repository ppa:kicad/kicad-9.0-releases
+sudo apt update
+sudo apt install kicad
+```
+
+> **Nota:** al añadir el PPA, la versión de KiCad 7 instalada desde los repositorios de Ubuntu se sustituirá por la del PPA. Recuerda que los proyectos guardados con esta versión no se podrán abrir en KiCad 7.
+
+### Flatpak
+
+Flatpak permite instalar la última versión de KiCad en cualquier distribución de Linux, de forma aislada del resto del sistema. Si Flatpak no está instalado en Ubuntu, primero hay que instalarlo y añadir el repositorio Flathub (después conviene cerrar sesión y volver a entrar):
+
+```bash
+sudo apt install flatpak
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+```
+
+A continuación instalamos KiCad y lo ejecutamos:
+
+```bash
+flatpak install flathub org.kicad.KiCad
+flatpak run org.kicad.KiCad
+```
+
+Los modelos 3D se instalan aparte con `flatpak install flathub org.kicad.KiCad.Library.Packages3D`. Al ejecutarse en un entorno aislado, puede que KiCad no tenga acceso a todas las carpetas del sistema; se recomienda guardar los proyectos dentro de la carpeta personal.
+
+### Otras plataformas
+
+Para Windows, macOS u otras distribuciones de Linux, se puede consultar la [página de descargas de KiCad](https://www.kicad.org/download/).
+
+### Comprobar la instalación
+
+Una vez instalado, KiCad aparecerá en el menú de aplicaciones; también se puede lanzar desde una terminal con el comando `kicad` (o `flatpak run org.kicad.KiCad` si se instaló con Flatpak). La versión instalada se puede consultar en el menú `Ayuda` → `Acerca de KiCad`.
 
 ## Entorno inicial de trabajo
 
